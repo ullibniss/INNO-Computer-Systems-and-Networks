@@ -52,7 +52,7 @@ Example:
 
 ### 1.4. Differentiate between the following in the context of software architecture and provide examples;
 
-#### Software correctness and Software robustness.
+### Software correctness and Software robustness.
 
 **Software Correctness**: 
 - **Definition** - correctness refers to the degree to which a software system meets its specified requirements and behaves as expected under normal conditions.
@@ -64,7 +64,7 @@ Example:
 - **Focus** - how well the software performs under abnormal, erroneous, or unexpected conditions. It emphasizes stability and fault tolerance.
 - **Example** - a robust calculator application will handle invalid input like dividing by zero by showing an error message rather than crashing.
 
-#### Topic & queue
+### Topic & queue
 
 **Topic**:
 - **Definition** - a topic is a messaging pattern used in publish-subscribe (pub-sub) architectures where messages are broadcasted to multiple consumers that have subscribed to a topic.
@@ -80,7 +80,7 @@ Example:
   - Messages remain in the queue until processed.
 - **Example** - a support ticket system where incoming tickets are placed in a queue, and each ticket is assigned to a single customer service representative.
 
-#### Architecture & design
+### Architecture & design
 
 **Architecture**:
 - **Definition** - architecture refers to the high-level structure of a system, outlining its components, how they interact, and the overall framework.
@@ -92,7 +92,7 @@ Example:
 - **Focus** - detailed decisions like algorithms, data structures, interfaces, and specific design patterns within the system.
 - **Example** - using the Singleton design pattern to manage the database connection in a microservice is a design decision.
   
-#### User, primary stakeholder and secondary stakeholder
+### User, primary stakeholder and secondary stakeholder
 
 **User**:
 - **Definition** - a user is the individual who directly interacts with the software to accomplish tasks or achieve specific goals.
@@ -106,7 +106,7 @@ Example:
 - **Definition** - a secondary stakeholder has an indirect interest in the project but is affected by the system or its outcome. They may not directly interact with the software or have a say in its development but are impacted by its performance.
 - **Example** - a compliance officer in a bank may be a secondary stakeholder because they are interested in the system’s adherence to financial regulations but do not use the system directly.
 
-#### Cohesion & coupling.
+### Cohesion & coupling.
 
 **Cohesion**:
 - **Definition** - cohesion refers to how closely related and focused the responsibilities of a single module or component are. High cohesion means that the module's functions are closely related to each other and contribute to a single, well-defined task.
@@ -132,7 +132,7 @@ Example:
 
 ### 2.2. What is an architectural view? Explain characteristics of architecture patterns in pattern based.
 
-An architectural view is a representation or perspective of a system's architecture, highlighting specific aspects or concerns to help stakeholders understand the system. Since systems are complex, it’s useful to break them down into different views, each addressing different concerns, such as performance, security, or scalability.
+An **architectural view** is a representation or perspective of a system's architecture, highlighting specific aspects or concerns to help stakeholders understand the system. Since systems are complex, it’s useful to break them down into different views, each addressing different concerns, such as performance, security, or scalability.
 
 #### Examples:
 
@@ -152,6 +152,64 @@ An architectural view is a representation or perspective of a system's architect
 
 ### 2.3. Which are the main approaches to describing a software architecture? List and explain with sample diagrams.
 
+There are seeveral approaches to describe software architecture:
+
+- **Views and Viewpoints** - Describes the system from different perspectives like logical, process, deployment, etc.
+- **C4 Model** - Breaks down the system into four levels of abstraction, from high-level context to detailed code.
+- **UML Diagrams** - Uses visual diagrams like class, sequence, and deployment diagrams to describe system behavior.
+- **ADRs** - Focuses on capturing architectural decisions in written form, emphasizing the rationale behind design choices.
+
+
+#### Views and Viewpoints Approach (View Model by Philippe Kruchten)
+
+- **Logical View** - Describes the functional requirements of the system, focusing on how the system’s major functionalities are provided.
+- **Development View** - Focuses on the software development perspective, showing how components are organized in the codebase.
+- **Process View** - Describes the dynamic aspects, such as concurrency and interaction between components.
+- **Physical View** - Focuses on how the system will be physically deployed across hardware resources.
+- **Scenarios (Use Case) View** - Captures how the system meets specific functional requirements by combining the above views.
+
+![image](https://github.com/user-attachments/assets/9a017ffa-2ffa-4680-b304-da24f7110eff)
+
+#### C4 Model (Context, Containers, Components, Code)
+
+The **C4** model breaks down the system into 4 hierarchical levels of abstraction
+
+- **Context** - Describes the system’s interactions with external entities like users or other systems.
+- **Containers** - Describes the high-level containers in the system and their interactions.
+- **Components** - Focuses on the internal components within each container.
+- **Code** - Focuses on how the components are implemented in the code level.
+
+![image](https://github.com/user-attachments/assets/9175391b-82d4-4c3e-8a49-662bd83fa799)
+
+#### Unified Modeling Language (UML) Diagrams
+
+**UML** is a standardized modeling language used to visualize the design of a system. UML diagrams can be used to describe different aspects of a system architecture:
+
+- **Class Diagrams** - Show the static structure, like classes and relationships.
+- **Sequence Diagrams** - Represent interactions between components over time.
+- **Component Diagrams** - Illustrate the high-level structure of a system, with focus on modular components.
+- **Deployment Diagrams** - Describe the hardware and software environment, showing where each component is deployed.
+
+Class diagram example:
+
+![image](https://github.com/user-attachments/assets/21adb8d6-e42f-4067-bfab-6c2ac8a1bc2d)
+
+Sequence diagram example:
+
+![image](https://github.com/user-attachments/assets/82d66efc-3485-47ce-ba55-3a08b35cefeb)
+
+####  Architecture Decision Record (ADR)
+
+An **Architecture Decision Record (ADR)** is a way of documenting the significant architectural decisions made during the development process. ADRs do not focus on diagrams but provide the rationale behind architectural choices. Each decision document records the context, problem, decision, consequences, and any alternatives considered.
+
+![image](https://github.com/user-attachments/assets/8e8ebae1-e36b-4b6d-b87a-98435a1e2a39)
 
 
 ### 2.4. Provide the advantages and disadvantages of the main approaches explained in question 2.3
+
+| **Approach**                | **Advantages**                                                                                                                                   | **Disadvantages**                                                                                                                                                  |
+|-----------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Views and Viewpoints**     | - Comprehensive<br>- Clear separation of concerns<br>- Standardized communication<br>- Scenario-driven                                           | - Complex to manage<br>- Requires expertise<br>- Risk of fragmentation between views                                                                               |
+| **C4 Model**                 | - Layered detail<br>- Simplicity<br>- Clear focus on scope<br>- Good for communication                                                          | - Lacks detailed dynamic views<br>- May over-simplify<br>- Focuses mostly on static aspects                                                                       |
+| **UML Diagrams**             | - Standardized<br>- Flexible (variety of diagrams)<br>- Visual communication<br>- Tool support                                                   | - High overhead in maintaining diagrams<br>- Steep learning curve<br>- Risk of over-specification<br>- Too low-level for high-level communication                  |
+| **Architecture Decision Records (ADRs)** | - Captures rationale<br>- Simple to maintain<br>- Promotes transparency<br>- Helps avoid “decision drift”                                      | - No visual representation<br>- Can be lengthy over time<br>- Doesn’t capture runtime or performance aspects<br>- Quality varies with author skills                |
