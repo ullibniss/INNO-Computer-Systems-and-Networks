@@ -17,6 +17,83 @@ Peer to Peer
 1.c. Explain for at least 2 kernel architectures, how IPC is handled.
 ```
 
+## 1.a
+
+### Process
+
+**Process** - is a runtime environment for running an instance of a program. For example, there is some program and when it is launched, a process is created for it. This process is endowed with certain properties, a portion of RAM is allocated to it and a unique identifier is assigned.
+
+Structure of process depends on operating system. Let's discuss linux procesess.
+
+Process has several states, you can see them on Figure 1.
+
+![Figure 1](https://github.com/user-attachments/assets/e1db8b12-94c5-47c7-8851-745f9fc0c72f)
+
+- **R (running)** - The process is being processed by the processor.
+- **R (runnable)** - The process is ready for processing and is in the queue to the processor. Running and runnable are denoted by the same letter R.
+- **D (uninterruptible sleep)** When a process accesses a device, such as a disk or network card, it goes into this state. 
+- **I (Idle)** - The state is similar to D, but such processes do not load the processor and are excluded from the calculation of the average system load (load average).
+- **S (sleeping)** - The process is waiting for some resources that are currently unavailable.
+- **T (stopped by job control signal)** - We'll talk about signals later, but the main thing to understand is that processes can process signals, and one of them can stop the process.
+- **Z (zombie)** - When a process completes its work, it frees up its resources, but does not free up its PID in the process table. 
+
+Every process starts with **fork()** system call that creates copy of process. Then the process configured via **exec()** system call.
+
+![Figure 2](https://github.com/user-attachments/assets/c886b5c9-b998-4f3f-8448-3d38f74ada63)
+
+Morover you can control processes with a several tools:
+
+- **kill** - interrupts process. Have different signal to control process behavior.
+- **bg**, **fg**, **jobs** - allow you to manage processes running in the foreground and background.
+- **ps** - shows process list.
+
+### Daemon
+
+![Figure 3](https://github.com/user-attachments/assets/92c790bb-fb87-4940-9b0c-f2536a069c6f)
+
+
+**Daemon** is a background process that runs long time. Usually it is service that controls something or server. Daemon examples are
+
+- **Nginx** - proxy engine for L7 routing. Runs as daemon is background and awaits requests.
+- **Bluetoothd** - bluetooth daemon, controls bluetooth workflow.
+
+Daemons usually have some provisor that controls their behavior. There are two popular provisor for linux:
+
+- **Systemd** - actually it is linux initialization system, but it also provides functionality for services provision(systemd units).
+- **Docker** - containerization system that used to run server applications. It used to run deamons. 
+
+### System call
+
+![Figure 4](https://github.com/user-attachments/assets/9b6dd4a0-f5e0-4b36-96bf-7a4d4284f001)
+
+
+**System call** - is function that handles communication with operating system kernel. Every operating system has it's own system calls. There are libraries to use system calls in programming languages. Basically you can call them in asssembly code.
+
+System calls example:
+- **fork()**(linux) or **CreateProcess()**(windows) - Create a new process.
+- **read()**(linux) or **ReadFile()**(windows) - Read data from a file or input device.
+
+Assembly system call example:
+
+![Figure 5](https://github.com/user-attachments/assets/cca69941-2748-4e99-b5ad-77736f80a521)
+
+### Client-Server
+
+![Figure 6](https://github.com/user-attachments/assets/ad38d9f1-2394-463d-a097-1e38ec7ad69b)
+
+**Client-Server** - is a software architecture where 2 sides - Server and Client. Server usually contains business logic that implements service or application behavior. Client is interface for user to interact with server.  
+
+Client-server examples:
+
+**Any website** - browser is client side, interface to interact with server. Browser sends requests to server, server returns reponse to browser.
+
+I Don't want write too much because this topic was discussed 100 times.
+
+### Peer-to-Peer
+
+![image](https://github.com/user-attachments/assets/e3f8cd24-f75f-44d6-a139-d7d254aed699)
+
+
 # Task 2
 
 ```
