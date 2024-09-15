@@ -93,6 +93,38 @@ I Don't want write too much because this topic was discussed 100 times.
 
 ![image](https://github.com/user-attachments/assets/e3f8cd24-f75f-44d6-a139-d7d254aed699)
 
+**Peer-to-Peer** - is software architecture that describes distibuted network of eqully privileged peers. Peer is one computer, user. 
+
+Examples of P2P:
+
+- **BitTorrent** -  peer-to-peer network protocol for cooperative file sharing over the Internet.
+- **MAC Addressing** - equal privileged networking addressing via device's MAC address.
+
+## 1.b
+
+### Pipelines
+
+
+|Syscall |	Number	|Description |
+|---|---|---|
+|PIPE	| 22 |	Create pipe |
+|PIPE2 |	293	| Create pipe|
+|TEE |	276	| Duplicate pipe content|
+|SPLICE	| 275	| Splice data to/from a pipe|
+|VMSPLICE	| 278	| Splice user pages into a pipe|
+
+### Shared Memory
+
+| Syscall |	Number | 	Description|
+|---|---|---|
+| SHMGET |	29 |	Allocates a System V shared memory segment |
+|SHMCTL	| 31	|System V shared memory control |
+|SHMAT	| 30	|Attach the System V shared memory segment to the address space of the calling process |
+|SHMDT	| 67	|Dettach the System V shared memory segment to the address space of the calling process |
+
+## 1.c
+
+
 
 # Task 2
 
