@@ -151,6 +151,8 @@ with your teammate]
   
 ## 3.a
 
+### Done in team with Joel Okore
+
 Let's consider a few scenarios:
 
 ### Bind shell
