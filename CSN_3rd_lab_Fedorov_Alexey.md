@@ -153,9 +153,11 @@ with your teammate]
 
 ### Done in team with Joel Okore
 
-Let's consider a few scenarios:
+Let's consider a few scenarios.
 
 ### Bind shell
+
+**Bind shell** - is a kind of shell that waits for a connection from a remote machine by opening a listening network port on the target system. The target's command line becomes accessible to the remote machine upon successful connection to this port. In the case of bind shell, attacker’s machine acts as a client and the victim’s machine acts as a server, which opens a communication port and waits for the client (attacker) to connect to it, and then issues commands to be executed remotely on the victim’s machine. It is frequently employed in malicious scenarios or penetration testing when an attacker seeks to take over a system.
 
 ![image](https://github.com/user-attachments/assets/ab52926e-35d2-46b9-b85a-0e0488610b76)
 
@@ -190,6 +192,8 @@ nc -nv 192.168.0.178 4444
 
 
 ### Reverse shell
+
+**Reverse shell** - the opposite of a bind shell. In a Reverse Shell scenario, the attacker gains control of the victim's system when the victim's computer establishes a connection with the attacker's computer. In situations when the victim's computer is protected by a firewall or network address translation (NAT), reverse shells are frequently utilized.
 
 ![image](https://github.com/user-attachments/assets/7ee3dc39-0d78-4d32-8542-4c74cc815828)
 
