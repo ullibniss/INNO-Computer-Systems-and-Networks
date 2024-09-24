@@ -16,7 +16,7 @@ I see **FTP** protocol and I suppose image is transfered this way. I filtered ft
 
 ![image](https://github.com/user-attachments/assets/7c26503b-9c13-492c-907e-fef20422d137)
 
-File transfer starts at **RETR** command. Filename is `key.zip`. I will use `Follow Stream` function of **Wireshark** to extract file.
+File transfer starts at **RETR** command. Filename is `key.zip`. I used `Follow Stream` function of **Wireshark** to extract file.
 
 ![image](https://github.com/user-attachments/assets/25095e69-095d-4d99-abb2-c708d2d2ee03)
 
