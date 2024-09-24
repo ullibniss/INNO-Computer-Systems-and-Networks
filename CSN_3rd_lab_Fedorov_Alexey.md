@@ -102,27 +102,65 @@ Examples of P2P:
 
 ## 1.b
 
-### Pipelines
+Linux provides several mechanisms for Interprocess communication. Let's list then and look for specific system calls
+
+### Pipes
+
+Pipe is a channel that connects two processes. One process can read, while other process writes data into pipe. For example, pipes are used to connect parent and child processes.
+
+System calls:
+
+- pipe() - creates a pipe and returns file descriptors for the read and write ends.
 
 
-|Syscall |	Number	|Description |
-|---|---|---|
-|PIPE	| 22 |	Create pipe |
-|PIPE2 |	293	| Create pipe|
-|TEE |	276	| Duplicate pipe content|
-|SPLICE	| 275	| Splice data to/from a pipe|
-|VMSPLICE	| 278	| Splice user pages into a pipe|
+### Message Queues
+
+Message queue is channel that provides asynchronous and typed information exchange. Every message has a type. Processes can send and receive messages based on type.
+
+System calls:
+
+- msgget() - creates or accesses a message queue.
+- msgsnd() - sends a message to the queue.
+- msgrcv() - receives a message from the queue.
+- msgctl() - performs control operations on the message queue.
 
 ### Shared Memory
 
-| Syscall |	Number | 	Description|
-|---|---|---|
-| SHMGET |	29 |	Allocates a System V shared memory segment |
-|SHMCTL	| 31	|System V shared memory control |
-|SHMAT	| 30	|Attach the System V shared memory segment to the address space of the calling process |
-|SHMDT	| 67	|Dettach the System V shared memory segment to the address space of the calling process |
+Shared memory provides access to memory segments to multiple processes. This is the fastest IPC method. To avoid race conditions, it provides semaphores.
+
+System calls:
+
+- shmget() - Allocates or accesses a shared memory segment.
+- shmat() - Attaches the shared memory segment to the process’s address space.
+- shmdt() - Detaches the shared memory segment from the process.
+- shmctl() - Controls the shared memory segment, such as marking it for destruction.
+
+### Semaphores
+
+Semaphore is tool to prevent race conditions. It controls amount of processes that can access to resource. Semophores are used in shared memory.
+
+System calls:
+
+- semget() - creates or accesses a set of semaphores.
+- semop() - performs operations on a semaphore.
+- semctl() - controls various aspects of the semaphore.
+
+### Sockets
+
+Sockets is method of communicating on different machines. It allows bidirectional communication and uses files to store data. 
+
+System calls:
+
+- socket() - creates a socket.
+- bind() - binds the socket to an address/port.
+- listen() - listens for connections on a socket.
+- accept() - accepts incoming connections.
+- connect() - connects to a remote socket.
+- send() and recv() - send and receive data over the socket.
+
 
 ## 1.c
+
 
 
 
