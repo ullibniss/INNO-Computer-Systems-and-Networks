@@ -137,7 +137,7 @@ System calls:
 
 ### Semaphores
 
-Semaphore is tool to prevent race conditions. It controls amount of processes that can access to resource. Semophores are used in shared memory.
+Semaphore is a tool to prevent race conditions. It controls amount of processes that can access to resource. Semophores are used in shared memory.
 
 System calls:
 
@@ -161,8 +161,40 @@ System calls:
 
 ## 1.c
 
+### Monolithic
 
+Monolithic kernel archirecture is entire operating system. It includes all functionality in one program:
 
+- Processes management
+- Memory management
+- IPC
+- Devices drivers management
+
+Interprorcess communication inside monolithic is efficient, but more complex, because everything happend inside kernel. 
+
+Since all IPC inside the kernel, performance is very good. Switching between kernel space and user space are much faster than in other architectures. Data does not need to travel outside kernel space.
+
+Mechanisms for IPC are the same as in answer 1.b, because Linux has Monolithic archirecture
+
+### Microkernel
+
+Microkernel archirecture is not the same as microservice. It mean that kernel is very small and has only essential elements:
+
+- Low-level memory management
+- IPC
+- Basic scheduling
+
+Other functionality like device drivers, file systems and network protocols management located in user-space.
+
+IPC for Microkernel is more critical that for Monolithic. Mojority of system-level services separated in user space.
+
+Interprocess communication is slow, because there many context switches from user-space to kernel-space for services.
+
+Mechanisms of IPC:
+
+- Message Passing - processes or services send and receive messages via well-defined APIs.
+- Minimal Shared Memory - some microkernels might offer shared memory mechanisms in limited cases, as example for performance-critical applications.
+- Port-Based IPC - ports or message queues where processes communicate by sending messages to specific ports. Microkernel routes messages between processes and services.
 
 # Task 2
 
