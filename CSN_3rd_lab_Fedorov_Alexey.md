@@ -207,6 +207,106 @@ advantages and disadvantages respectively.
 programming language of your choice.
 ```
 
+## 2.a
+
+I defined methods pf IPC above. Here is advantages and disadventages:
+
+| **IPC Method**      | **Advantages**                                | **Disadvantages**                                |
+|---------------------|-----------------------------------------------|-------------------------------------------------|
+| **Pipes**           | Simple, safe for parent-child processes        | Unidirectional, limited buffer size             |
+| **Message Queues**  | Asynchronous, prioritized messages             | Complexity, limited capacity                    |
+| **Shared Memory**   | Fast, efficient for large data                 | Requires synchronization, security risks        |
+| **Sockets**         | Bidirectional, networking               | Slower, more complex implementation             |
+| **Semaphores**      | Prevents race conditions, simple synchronization | No data transfer, potential for deadlocks       |
+
+## 2.b
+
+To show IPC facilities and currect activity on my system, I will use several tools: `ipcs`,`lsof` and `ss`
+
+### ipcs
+
+Let's execute without arguements:
+
+![image](https://github.com/user-attachments/assets/8b69bde8-2648-4133-b931-9b27ebf16f2d)
+
+We can see used Message Queues, Shared Memory Segments and Semaphores. There are no used MQs and Semaphores on Figure.
+
+But SHM segments is used. Table shows us the following parameters
+
+`shmid` - id of shared memory segment
+`owner` - owner of shm segment. Usually it is creator too
+`perms` - permisions for shared memory segment.
+`bytes` - size of memory segment.
+`nattch` - number of attached processes
+`status` - status of shm segment
+
+I can also use flag `ipcs -c` to show actual creator and owner separately
+
+![image](https://github.com/user-attachments/assets/25c7f9ba-3490-47a1-837d-8be0ddb05140)
+
+`cuid, cgid` - creator user and group ids
+`uid, gid` - owner user and group ids
+
+And finally I can get last operator and limits with flags `-p` and `-l`
+
+![image](https://github.com/user-attachments/assets/89355257-7aaa-4c4c-b413-45f7df8fd7ee)
+
+`lpid` - last operator process id
+
+### lsof
+
+Unfortunately, ipcs can't show information about pipes. But `lsof` can. 
+
+It is useless to run command without modifications, because it shows information about all file descriptors.
+
+Let's run it with grep - `lsof 2>/dev/null | grep "pipe"`
+
+![image](https://github.com/user-attachments/assets/f5c8426f-d6c9-4346-9edc-984b48797bca)
+
+We can see that pipes are used. But information is huge. Lets check what applications use pipes:
+
+```
+lsof 2>/dev/null | grep "pipe" | cut -d ' ' -f1 | sort | uniq -c
+```
+
+![image](https://github.com/user-attachments/assets/52d38971-df98-41d8-9b1f-34bf5a2bd2b6)
+
+Here is big list of applications.
+
+Let's discover socker usage with `lsof`:
+
+```
+lsof -i 2>/dev/null
+```
+
+![image](https://github.com/user-attachments/assets/27fb976c-bdb2-4171-a558-362aae9ef6c2)
+
+Here is list of applications that using scoket. But it is not an entire list, because here is only socket that are used for network communication.
+
+### ss
+
+Socket can also be use for local IPC.
+
+I will use `ss` to show them:
+
+```
+ss -w
+```
+
+![image](https://github.com/user-attachments/assets/82955851-3848-4fd6-8980-193b28215d46)
+
+We can see list of application used for local interprocess communication.
+
+## 2.c
+
+Shared memory program
+
+https://drive.google.com/file/d/1lVpIlOJTVXN7VbcZk-_U0G4KxXguFsW2/view?usp=sharing
+
+Pipe program
+
+https://drive.google.com/file/d/12cfhHdZDgqDtW7oVrF1BT_RlVleKbpII/view?usp=sharing
+
 # Task 3
 
 ```
