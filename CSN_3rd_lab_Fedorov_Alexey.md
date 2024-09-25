@@ -25,9 +25,7 @@ Peer to Peer
 
 Structure of process depends on operating system. Let's discuss linux procesess.
 
-Process has several states, you can see them on Figure 1.
-
-![Figure 1](https://github.com/user-attachments/assets/e1db8b12-94c5-47c7-8851-745f9fc0c72f)
+Process has several states:
 
 - **R (running)** - The process is being processed by the processor.
 - **R (runnable)** - The process is ready for processing and is in the queue to the processor. Running and runnable are denoted by the same letter R.
@@ -35,7 +33,9 @@ Process has several states, you can see them on Figure 1.
 - **I (Idle)** - The state is similar to D, but such processes do not load the processor and are excluded from the calculation of the average system load (load average).
 - **S (sleeping)** - The process is waiting for some resources that are currently unavailable.
 - **T (stopped by job control signal)** - We'll talk about signals later, but the main thing to understand is that processes can process signals, and one of them can stop the process.
-- **Z (zombie)** - When a process completes its work, it frees up its resources, but does not free up its PID in the process table. 
+- **Z (zombie)** - When a process completes its work, it frees up its resources, but does not free up its PID in the process table.
+
+![Figure 1](https://github.com/user-attachments/assets/e1db8b12-94c5-47c7-8851-745f9fc0c72f)
 
 Every process starts with **fork()** system call that creates copy of process. Then the process configured via **exec()** system call.
 
@@ -52,7 +52,7 @@ Morover you can control processes with a several tools:
 ![Figure 3](https://github.com/user-attachments/assets/92c790bb-fb87-4940-9b0c-f2536a069c6f)
 
 
-**Daemon** is a background process that runs long time. Usually it is service that controls something or server. Daemon examples are
+**Daemon** is a background process that runs long time. Usually it is service that controls something or server. Daemon examples are:
 
 - **Nginx** - proxy engine for L7 routing. Runs as daemon is background and awaits requests.
 - **Bluetoothd** - bluetooth daemon, controls bluetooth workflow.
@@ -102,7 +102,7 @@ Examples of P2P:
 
 ## 1.b
 
-Linux provides several mechanisms for Interprocess communication. Let's list then and look for specific system calls
+Linux provides several mechanisms for Interprocess communication. Let's list then and look for specific system calls.
 
 ### Pipes
 
@@ -174,7 +174,7 @@ Interprorcess communication inside monolithic is efficient, but more complex, be
 
 Since all IPC inside the kernel, performance is very good. Switching between kernel space and user space are much faster than in other architectures. Data does not need to travel outside kernel space.
 
-Mechanisms for IPC are the same as in answer 1.b, because Linux has Monolithic archirecture
+Mechanisms for IPC are the same as in answer 1.b, because Linux has Monolithic archirecture.
 
 ### Microkernel
 
@@ -221,7 +221,7 @@ I defined methods of IPC above. Here is advantages and disadventages:
 
 ## 2.b
 
-To show IPC facilities and currect activity on my system, I will use several tools: `ipcs`,`lsof` and `ss`
+To show IPC facilities and currect activity on my system, I will use several tools: `ipcs`,`lsof` and `ss`.
 
 ### ipcs
 
@@ -231,7 +231,7 @@ Let's execute without arguements:
 
 We can see used Message Queues, Shared Memory Segments and Semaphores. There are no used MQs and Semaphores on Figure.
 
-But SHM segments is used. Table shows us the following parameters
+But SHM segments is used. Table shows us the following parameters:
 
 - `shmid` - id of shared memory segment
 - `owner` - owner of shm segment. Usually it is creator too
@@ -240,18 +240,18 @@ But SHM segments is used. Table shows us the following parameters
 - `nattch` - number of attached processes
 - `status` - status of shm segment
 
-I can also use flag `ipcs -c` to show actual creator and owner separately
+I can also use flag `ipcs -c` to show actual creator and owner separately.
 
 ![Figure 9](https://github.com/user-attachments/assets/25c7f9ba-3490-47a1-837d-8be0ddb05140)
 
-- `cuid, cgid` - creator user and group ids
-- `uid, gid` - owner user and group ids
+- `cuid, cgid` - creator user and group ids.
+- `uid, gid` - owner user and group ids.
 
-And finally I can get last operator and limits with flags `-p` and `-l`
+And finally I can get last operator and limits with flags `-p` and `-l`.
 
 ![Figure 10](https://github.com/user-attachments/assets/89355257-7aaa-4c4c-b413-45f7df8fd7ee)
 
-- `lpid` - last operator process id
+- `lpid` - last operator process id.
 
 ### lsof
 
@@ -259,7 +259,7 @@ Unfortunately, ipcs can't show information about pipes. But `lsof` can.
 
 It is useless to run command without modifications, because it shows information about all file descriptors.
 
-Let's run it with grep - `lsof 2>/dev/null | grep "pipe"`
+Let's run it with grep - `lsof 2>/dev/null | grep "pipe"`.
 
 ![Figure 11](https://github.com/user-attachments/assets/f5c8426f-d6c9-4346-9edc-984b48797bca)
 
@@ -299,13 +299,8 @@ We can see list of used for local interprocess communication sockets.
 
 ## 2.c
 
-Shared memory program
-
-https://drive.google.com/file/d/1lVpIlOJTVXN7VbcZk-_U0G4KxXguFsW2/view?usp=sharing
-
-Pipe program
-
-https://drive.google.com/file/d/12cfhHdZDgqDtW7oVrF1BT_RlVleKbpII/view?usp=sharing
+- [Shared memory program](https://drive.google.com/file/d/1lVpIlOJTVXN7VbcZk-_U0G4KxXguFsW2/view?usp=sharing)
+- [Pipe program](https://drive.google.com/file/d/12cfhHdZDgqDtW7oVrF1BT_RlVleKbpII/view?usp=sharing)
 
 # Task 3
 
