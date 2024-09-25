@@ -91,7 +91,7 @@ I Don't want write too much because this topic was discussed 100 times.
 
 ### Peer-to-Peer
 
-![image](https://github.com/user-attachments/assets/e3f8cd24-f75f-44d6-a139-d7d254aed699)
+![Figure 7](https://github.com/user-attachments/assets/e3f8cd24-f75f-44d6-a139-d7d254aed699)
 
 **Peer-to-Peer** - is software architecture that describes distibuted network of eqully privileged peers. Peer is one computer, user. 
 
@@ -227,7 +227,7 @@ To show IPC facilities and currect activity on my system, I will use several too
 
 Let's execute without arguements:
 
-![image](https://github.com/user-attachments/assets/8b69bde8-2648-4133-b931-9b27ebf16f2d)
+![Figure 8](https://github.com/user-attachments/assets/8b69bde8-2648-4133-b931-9b27ebf16f2d)
 
 We can see used Message Queues, Shared Memory Segments and Semaphores. There are no used MQs and Semaphores on Figure.
 
@@ -242,14 +242,14 @@ But SHM segments is used. Table shows us the following parameters
 
 I can also use flag `ipcs -c` to show actual creator and owner separately
 
-![image](https://github.com/user-attachments/assets/25c7f9ba-3490-47a1-837d-8be0ddb05140)
+![Figure 9](https://github.com/user-attachments/assets/25c7f9ba-3490-47a1-837d-8be0ddb05140)
 
 `cuid, cgid` - creator user and group ids
 `uid, gid` - owner user and group ids
 
 And finally I can get last operator and limits with flags `-p` and `-l`
 
-![image](https://github.com/user-attachments/assets/89355257-7aaa-4c4c-b413-45f7df8fd7ee)
+![Figure 10](https://github.com/user-attachments/assets/89355257-7aaa-4c4c-b413-45f7df8fd7ee)
 
 `lpid` - last operator process id
 
@@ -261,7 +261,7 @@ It is useless to run command without modifications, because it shows information
 
 Let's run it with grep - `lsof 2>/dev/null | grep "pipe"`
 
-![image](https://github.com/user-attachments/assets/f5c8426f-d6c9-4346-9edc-984b48797bca)
+![Figure 11](https://github.com/user-attachments/assets/f5c8426f-d6c9-4346-9edc-984b48797bca)
 
 We can see that pipes are used. But information is huge. Lets check what applications use pipes:
 
@@ -269,7 +269,7 @@ We can see that pipes are used. But information is huge. Lets check what applica
 lsof 2>/dev/null | grep "pipe" | cut -d ' ' -f1 | sort | uniq -c
 ```
 
-![image](https://github.com/user-attachments/assets/52d38971-df98-41d8-9b1f-34bf5a2bd2b6)
+![Figure 12](https://github.com/user-attachments/assets/52d38971-df98-41d8-9b1f-34bf5a2bd2b6)
 
 Here is big list of applications.
 
@@ -279,7 +279,7 @@ Let's discover socker usage with `lsof`:
 lsof -i 2>/dev/null
 ```
 
-![image](https://github.com/user-attachments/assets/27fb976c-bdb2-4171-a558-362aae9ef6c2)
+![Figure 13](https://github.com/user-attachments/assets/27fb976c-bdb2-4171-a558-362aae9ef6c2)
 
 Here is list of applications that using scoket. But it is not an entire list, because here is only socket that are used for network communication.
 
@@ -293,7 +293,7 @@ I will use `ss` to show them:
 ss -w
 ```
 
-![image](https://github.com/user-attachments/assets/82955851-3848-4fd6-8980-193b28215d46)
+![Figure 14](https://github.com/user-attachments/assets/82955851-3848-4fd6-8980-193b28215d46)
 
 We can see list of application used for local interprocess communication.
 
@@ -329,7 +329,7 @@ Let's consider a few scenarios.
 
 **Bind shell** - is a kind of shell that waits for a connection from a remote machine by opening a listening network port on the target system. The target's command line becomes accessible to the remote machine upon successful connection to this port. In the case of bind shell, attacker’s machine acts as a client and the victim’s machine acts as a server, which opens a communication port and waits for the client (attacker) to connect to it, and then issues commands to be executed remotely on the victim’s machine. It is frequently employed in malicious scenarios or penetration testing when an attacker seeks to take over a system.
 
-![image](https://github.com/user-attachments/assets/ab52926e-35d2-46b9-b85a-0e0488610b76)
+![Figure 15](https://github.com/user-attachments/assets/ab52926e-35d2-46b9-b85a-0e0488610b76)
 
 In our first scenario, Joel reached out to Lesha for help and asked him to connect to his computer and execute some commands remotely. Joel has a public IP address and is directly connected to the internet. Lesha, however, is behind a NAT and has an internal IP address. Joel needs to bind bash to a TCP port on his public IP address and ask Lesha to connect to his specific IP address and port. Joel will run Netcat with the -e parameter to execute bash:
 
@@ -365,7 +365,7 @@ nc -nv 192.168.0.178 4444
 
 **Reverse shell** - the opposite of a bind shell. In a Reverse Shell scenario, the attacker gains control of the victim's system when the victim's computer establishes a connection with the attacker's computer. In situations when the victim's computer is protected by a firewall or network address translation (NAT), reverse shells are frequently utilized.
 
-![image](https://github.com/user-attachments/assets/7ee3dc39-0d78-4d32-8542-4c74cc815828)
+![Figure 16](https://github.com/user-attachments/assets/7ee3dc39-0d78-4d32-8542-4c74cc815828)
 
 In our second scenario, Lesha needs Joel's help. Here, we can use another useful feature of Netcat — the ability to send commands to a host that is listening on a specific port. In this situation, Lesha cannot (as per the scenario) bind port 4444 for /bin/bash locally (bind shell) on his computer and wait for Joel to connect, but she can transfer control of his bash to Joel's computer. This is called a reverse shell. For this to work, Joel will first set up Netcat to listen. In our example, we'll use port 4444:
 
@@ -439,3 +439,13 @@ Here are some of the security issues that comes up when the netcat's gaping secu
 2. Lack of Authentication: Netcat lacks encryption and authentication. Anyone who discovers the open port and is connected to the internet can access the shell without a login.
 3. Firewall Evasion: By using frequently approved ports (like 80 and 443), Netcat can be used to bypass firewall limitations and grant attackers access to services that are authorized.
 
+## References
+
+1. https://sysadminium.ru/processes-in-a-linux-system/
+2. https://en.wikipedia.org/wiki/Daemon_(computing)
+3. https://en.wikipedia.org/wiki/System_call
+4. https://brave.com/glossary/peer-to-peer/#:~:text=A%20peer%2Dto%2Dpeer%20(,%2C%20processing%20capabilities%2C%20and%20bandwidth.
+5. https://www.geeksforgeeks.org/inter-process-communication-ipc/
+6. https://www.man7.org/linux/man-pages/man1/ipcs.1.html
+7. https://man7.org/linux/man-pages/man8/lsof.8.html
+8. https://medium.com/@gpiechnik/what-is-bind-shell-and-reverse-shell-4653363ebd87
