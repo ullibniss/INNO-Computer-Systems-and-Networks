@@ -209,7 +209,7 @@ programming language of your choice.
 
 ## 2.a
 
-I defined methods pf IPC above. Here is advantages and disadventages:
+I defined methods of IPC above. Here is advantages and disadventages:
 
 | **IPC Method**      | **Advantages**                                | **Disadvantages**                                |
 |---------------------|-----------------------------------------------|-------------------------------------------------|
@@ -233,25 +233,25 @@ We can see used Message Queues, Shared Memory Segments and Semaphores. There are
 
 But SHM segments is used. Table shows us the following parameters
 
-`shmid` - id of shared memory segment
-`owner` - owner of shm segment. Usually it is creator too
-`perms` - permisions for shared memory segment.
-`bytes` - size of memory segment.
-`nattch` - number of attached processes
-`status` - status of shm segment
+- `shmid` - id of shared memory segment
+- `owner` - owner of shm segment. Usually it is creator too
+- `perms` - permisions for shared memory segment.
+- `bytes` - size of memory segment.
+- `nattch` - number of attached processes
+- `status` - status of shm segment
 
 I can also use flag `ipcs -c` to show actual creator and owner separately
 
 ![Figure 9](https://github.com/user-attachments/assets/25c7f9ba-3490-47a1-837d-8be0ddb05140)
 
-`cuid, cgid` - creator user and group ids
-`uid, gid` - owner user and group ids
+- `cuid, cgid` - creator user and group ids
+- `uid, gid` - owner user and group ids
 
 And finally I can get last operator and limits with flags `-p` and `-l`
 
 ![Figure 10](https://github.com/user-attachments/assets/89355257-7aaa-4c4c-b413-45f7df8fd7ee)
 
-`lpid` - last operator process id
+- `lpid` - last operator process id
 
 ### lsof
 
@@ -295,7 +295,7 @@ ss -w
 
 ![Figure 14](https://github.com/user-attachments/assets/82955851-3848-4fd6-8980-193b28215d46)
 
-We can see list of application used for local interprocess communication.
+We can see list of used for local interprocess communication sockets.
 
 ## 2.c
 
