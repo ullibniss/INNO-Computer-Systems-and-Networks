@@ -19,10 +19,9 @@
 
 Systemd - is a linux initialization and units manager[1]. It controls how system is booted. It uses `unit` astraction to manage resources.
 
-Systemd initialized system using `target units`.
+Systemd initialized system using `target units`. Target is usually run level, but not all targets are runlevels. Unit called `default.target` is a default run-level configured in system and it is symlink to `boot.target`.  
 
 ![image](https://github.com/user-attachments/assets/a47c4084-a88c-45b1-a01e-00bbd5aed532)
-
 
 Unit refers to any resource that the system knows how to operate on and manage. There are several unit categories[2]:
 
@@ -61,7 +60,35 @@ systemctl list-units --type=service - Get list of all service units
 
 ## What are the available Runlevel on linux?
 
-Run levels - is system boot levels. Every level setups system it's way.
+Run levels in Linux represent different modes of operation that define the services and processes running on the system.
+
+There are 7 traditional run levels[4]
+```
+0 Halt - Shuts down the system.
+1 Single-User (Rescue Mode) - A minimal mode, typically used for maintenance tasks. Only the root user can log in, and networking services are not started. This mode is used for troubleshooting and performing administrative tasks.
+2 Multi-User - without Networking: In this run level, multiple users can log in, but networking is disabled. It's rarely used in modern systems.
+3 Full Multi-User Mode with Networking - A non-graphical mode where multiple users can log in, and networking is enabled.
+4 Unused - This run level is generally undefined and can be customized by the system administrator.
+5 Multi-User Mode with Networking and GUI - Similar to run level 3 but with a graphical user interface (GUI) such as Wayland started. This is typically the default run level for desktop systems.
+6 Reboot - Reboots the system.
+```
+
+Run levels can also be switched via systemd. Systemd have several command to permorm it:
+
+```
+systemctl set-default multi-user.target - sets default run level
+
+systemctl isolate graphical.target - switch run level of system for one time.
+```
+
+This commands operate with run level targets[5].
+
+- poweroff.target — system shutdown.
+- rescue.target — recovery mode. In this mode, a minimal set of services is started, and networking is not enabled. It is used for system recovery purposes. It is similar to Safe Mode in Windows.
+- multi-user.target — multi-user mode.
+- graphical.target — multi-user mode with graphical support. However, if no graphical interface is installed, this target functions the same as multi-user.target. It is the default target in both Debian 11 and Ubuntu 22.04.
+- reboot.target — system reboot.
+- default.target — the mode that will be loaded by default. It is a symbolic link to one of the boot targets.
 
 ## What does the systemctl list-unit-files command does?
 
@@ -75,7 +102,15 @@ Let's execute it:
 
 ![image](https://github.com/user-attachments/assets/44856af7-7ab2-4be7-9461-1e9b03434b73)
 
+- `UNIT FILE` - name of unit file
+- `STATE` - state of unit, related to file
+- `VENDOR PRESET` - state of unit, related to file, that vendor setted up as default.
 
+Command shows list of unit files, it's states and vendor preseted state.
+
+It also supports fitering unit files by type with `--type=<type>` flag.
+
+![image](https://github.com/user-attachments/assets/18e79d06-dbfa-436b-8061-9eee4387b9a0)
 
 # Task 2. Creating Systemd service
 
@@ -274,8 +309,10 @@ Script will be executed every 30 minutes at Wednesday.
 1. https://ru.wikipedia.org/wiki/Systemd
 2. https://www.digitalocean.com/community/tutorials/understanding-systemd-units-and-unit-files
 3. https://wiki.archlinux.org/title/Init#:~:text=Init%20is%20the%20first%20process,automatically%20adopts%20all%20orphaned%20processes.
-4. https://www.freedesktop.org/software/systemd/man/latest/systemd.service.html
-5. https://linux.die.net/man/8/nginx
-6. https://www.freedesktop.org/software/systemd/man/latest/systemd.kill.html
-7. https://ru.wikipedia.org/wiki/Cron
-8. https://crontab.guru/
+4. https://wiki.merionet.ru/articles/runlevel-v-linux-chto-eto-i-s-chem-edyat
+5. https://sysadminium.ru/adm-serv-linux-systemd-target/
+6. https://www.freedesktop.org/software/systemd/man/latest/systemd.service.html
+7. https://linux.die.net/man/8/nginx
+8. https://www.freedesktop.org/software/systemd/man/latest/systemd.kill.html
+9. https://ru.wikipedia.org/wiki/Cron
+10. https://crontab.guru/
