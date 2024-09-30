@@ -13,15 +13,68 @@
 3. what does the systemctl list-unit-files command does?
 ```
 
-# 1.1
+##  What is systemctl and init and systemd ?
 
 ![image](https://github.com/user-attachments/assets/178adbed-25c4-453a-9a12-2071bdf207bd)
 
-Systemd - is a linux initialization and units manager. It controls how system is booted.
+Systemd - is a linux initialization and units manager[1]. It controls how system is booted. It uses `unit` astraction to manage resources.
 
-Systemctl - is a command line interface to control systemd manually.
+Systemd initialized system using `target units`.
+
+![image](https://github.com/user-attachments/assets/a47c4084-a88c-45b1-a01e-00bbd5aed532)
+
+
+Unit refers to any resource that the system knows how to operate on and manage. There are several unit categories[2]:
+
+```
+- .service: A service unit describes how to manage a service or application on the server. This will include how to start or stop the service, under which circumstances it should be automatically started, and the dependency and ordering information for related software.
+- .socket: A socket unit file describes a network or IPC socket, or a FIFO buffer that systemd uses for socket-based activation. These always have an associated .service file that will be started when activity is seen on the socket that this unit defines.
+- .device: A unit that describes a device that has been designated as needing systemd management by udev or the sysfs filesystem. Not all devices will have .device files. Some scenarios where .device units may be necessary are for ordering, mounting, and accessing the devices.
+- .mount: This unit defines a mountpoint on the system to be managed by systemd. These are named after the mount path, with slashes changed to dashes. Entries within /etc/fstab can have units created automatically.
+- .automount: An .automount unit configures a mountpoint that will be automatically mounted. These must be named after the mount point they refer to and must have a matching .mount unit to define the specifics of the mount.
+- .swap: This unit describes swap space on the system. The name of these units must reflect the device or file path of the space.
+- .target: A target unit is used to provide synchronization points for other units when booting up or changing states. They also can be used to bring the system to a new state. Other units specify their relation to targets to become tied to the target’s operations.
+- .path: This unit defines a path that can be used for path-based activation. By default, a .service unit of the same base name will be started when the path reaches the specified state. This uses inotify to monitor the path for changes.
+- .timer: A .timer unit defines a timer that will be managed by systemd, similar to a cron job for delayed or scheduled activation. A matching unit will be started when the timer is reached.
+- .snapshot: A .snapshot unit is created automatically by the systemctl snapshot command. It allows you to reconstruct the current state of the system after making changes. Snapshots do not survive across sessions and are used to roll back temporary states.
+- .slice: A .slice unit is associated with Linux Control Group nodes, allowing resources to be restricted or assigned to any processes associated with the slice. The name reflects its hierarchical position within the cgroup tree. Units are placed in certain slices by default depending on their type.
+- .scope: Scope units are created automatically by systemd from information received from its bus interfaces. These are used to manage sets of system processes that are created externally.
+```
+
+Init is the first process started during system boot. It is a daemon process that continues running until the system is shut down. Init is the direct or indirect ancestor of all other processes, and automatically adopts all orphaned processes[3].
+
+![image](https://github.com/user-attachments/assets/4eb05a1c-6d20-48f3-b6d5-28a57a996553)
+
+Systemctl - is a command line interface to control systemd manually[2]. It provides commands to list and manages systemd units. It also can manage run levels of system.
+
+Example commands:
+
+```
+systemctl start sshd - Starts sshd.service
+
+systemctl status sshd - Checks sshd.service status and also shows logs
+
+systemctl list-units - Get list of all units that loaded to systemd
+
+systemctl list-units --type=service - Get list of all service units
+```
+
+## What are the available Runlevel on linux?
 
 Run levels - is system boot levels. Every level setups system it's way.
+
+## What does the systemctl list-unit-files command does?
+
+The full command:
+
+```
+sudo systemctl list-unit-files
+```
+
+Let's execute it:
+
+![image](https://github.com/user-attachments/assets/44856af7-7ab2-4be7-9461-1e9b03434b73)
+
 
 
 # Task 2. Creating Systemd service
@@ -168,6 +221,23 @@ Now systemd unit is ready.
 
 ## Systemd unit testing
 
+I loaded service unit file to systemd.
+
+![image](https://github.com/user-attachments/assets/8ffd40ad-9a83-4edc-a8c5-b32519c14f38)
+
+Try to start nginx.
+
+![image](https://github.com/user-attachments/assets/972de03a-55b0-468d-9ec9-0cbd1cabb02e)
+
+It works!
+
+Nginx stop.
+
+![image](https://github.com/user-attachments/assets/cc6c081f-bdd2-416b-804e-3347a88c89fe)
+
+Reload.
+
+![image](https://github.com/user-attachments/assets/b2d7ea76-caa4-4a5f-ac84-a83b22231603)
 
 
 # Task 4. Crontab
@@ -198,3 +268,14 @@ vi /etc/cron.d/run_script
 ![image](https://github.com/user-attachments/assets/a635290d-ba2a-4876-9f4b-9fab50131970)
 
 Script will be executed every 30 minutes at Wednesday.
+
+# References
+
+1. https://ru.wikipedia.org/wiki/Systemd
+2. https://www.digitalocean.com/community/tutorials/understanding-systemd-units-and-unit-files
+3. https://wiki.archlinux.org/title/Init#:~:text=Init%20is%20the%20first%20process,automatically%20adopts%20all%20orphaned%20processes.
+4. https://www.freedesktop.org/software/systemd/man/latest/systemd.service.html
+5. https://linux.die.net/man/8/nginx
+6. https://www.freedesktop.org/software/systemd/man/latest/systemd.kill.html
+7. https://ru.wikipedia.org/wiki/Cron
+8. https://crontab.guru/
