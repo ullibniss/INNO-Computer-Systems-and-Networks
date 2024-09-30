@@ -15,9 +15,14 @@
 
 # 1.1
 
+![image](https://github.com/user-attachments/assets/178adbed-25c4-453a-9a12-2071bdf207bd)
+
 Systemd - is a linux initialization and units manager. It controls how system is booted.
 
-Run levels - is system boot levels. Every level
+Systemctl - is a command line interface to control systemd manually.
+
+Run levels - is system boot levels. Every level setups system it's way.
+
 
 # Task 2. Creating Systemd service
 
@@ -86,6 +91,84 @@ I dont know how to check that it works, because of this I simply will run it.
 It still works, good!
 
 # Task 3. Install a web-server service
+
+## Installation
+
+I would like to install nginx. Let's do it.
+
+```
+apt install -y nginx
+```
+
+![image](https://github.com/user-attachments/assets/0ea1f798-7b46-4de8-a659-84d0e9884e10)
+
+Verify that nginx installed.
+
+```
+dpkg -l | grep nginx
+```
+
+![image](https://github.com/user-attachments/assets/3cccb3c7-3dd3-44c7-bf6e-d29c7e7c9fdd)
+
+![image](https://github.com/user-attachments/assets/e2d3d1ec-6650-4f9b-9d73-e501b29ff526)
+
+
+## Systemd service unit implementation
+
+I started with `[Unit section]`. Firstly I added description.
+
+![image](https://github.com/user-attachments/assets/f4d3655f-cb3d-443b-a575-c4fc510c3d74)
+
+Server must be executed after network initialization.
+
+![image](https://github.com/user-attachments/assets/379da96e-ede3-4a07-9947-859dae1dbb88)
+
+That all with `[Unit]` section. Let's describe `[Service]`. I started with Type, this field has (8 options)[https://www.freedesktop.org/software/systemd/man/latest/systemd.service.html]. I will use `forking`, because of nginx master-worker architecture.
+
+![image](https://github.com/user-attachments/assets/11a39ca7-6ecc-4965-beb6-9f0fd56e4944)
+
+Next step is to define control commands. We have three main options to control web server:
+
+- stop
+- start
+- reload
+
+Moreover, configuration of service required test before server launch.
+
+![image](https://github.com/user-attachments/assets/74ba386d-0b8d-41c3-8cd8-912ea6d4a93f)
+
+flags:
+- `-t` - tests web server's configuration.
+- `-q` - quiet launch. Suppresses non-error messages.
+- `-g` - provides ability to setup global directives. `daemon on` for example
+- `-s` - flag to send signal to main process. For example `reload` sends SIGHUP to master process and makes hot-reload of web server.
+
+We can see that nginx uses .pid file. This is the way nginx knows what process to send signals. Systemd provides feature to set pid file via `PIDfile` line.
+
+![image](https://github.com/user-attachments/assets/20145be2-1899-490c-a534-27e4801a5329)
+
+The last thing I want to configure in `[Service]` section is KillMode. This function controls how signals will be sent to processes, here is options:
+
+- `process` - kill only main process.
+- `mixed` - kill main and children processes.
+- `control-group` - kill the whole control group of service unit.
+- `none` - do nothing.
+
+I use `mixed` option, to kill master nginx process and workers at the same time.
+
+![image](https://github.com/user-attachments/assets/4b3b05c3-23be-403d-9ccd-58cb13a6666d)
+
+Next section is `[Install]`. I will use it only for one purpose - autostart. I can define there `WantedBy` directive that will execute service on chosen run-level. 
+
+System has multi-user run level by default. I will use this target.
+
+![image](https://github.com/user-attachments/assets/5e25e2e7-d9bb-40c4-84d6-ad73f5259a43)
+
+Now systemd unit is ready.
+
+## Systemd unit testing
+
+
 
 # Task 4. Crontab
 
