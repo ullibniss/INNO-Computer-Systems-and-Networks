@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/4a3d63ed-5064-4156-b300-f72acf3a98f5)# CSN. Lab 4. Networking Reconnaissance and Analysis
+# CSN. Lab 4. Networking Reconnaissance and Analysis
 
 ## Done by Fedorov Alexey
 
