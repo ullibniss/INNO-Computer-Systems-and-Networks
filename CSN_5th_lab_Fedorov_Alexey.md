@@ -1,4 +1,4 @@
-# CSN. Lab 4. Networking Reconnaissance and Analysis
+![image](https://github.com/user-attachments/assets/4a3d63ed-5064-4156-b300-f72acf3a98f5)# CSN. Lab 4. Networking Reconnaissance and Analysis
 
 ## Done by Fedorov Alexey
 
@@ -276,6 +276,8 @@ Reload.
 
 
 # Task 4. Crontab
+
+![image](https://github.com/user-attachments/assets/90ffa4f0-e87e-4eaa-ae75-482965e7a30e)
 
 Let's try 2 ways to execute script in crontab:
 
