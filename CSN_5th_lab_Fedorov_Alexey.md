@@ -154,7 +154,7 @@ It works!
 
 ## 2.2 The working directory should be set to the current user home directory
 
-I specified working directory with `WorkingDirectory=/home/%u`
+I specified working directory with `WorkingDirectory=/home/%u`[6].
 
 ![image](https://github.com/user-attachments/assets/b89719f4-85d2-4143-a60c-f682f32e494b)
 
@@ -168,7 +168,7 @@ Works!
 
 ## 2.3 This service will only run after the network.target service
 
-To run service only after network.target, I added `After: network.target`.
+To run service only after network.target, I added `After: network.target`[6].
 
 ![image](https://github.com/user-attachments/assets/7a14e092-3e40-43e2-9c2d-b0212b6fdcb0)
 
@@ -225,7 +225,7 @@ Moreover, the configuration of the service requires testing before the server la
 
 ![image](https://github.com/user-attachments/assets/74ba386d-0b8d-41c3-8cd8-912ea6d4a93f)
 
-flags:
+flags[7]:
 - `-t` - tests web server's configuration.
 - `-q` - quiet launch. Suppresses non-error messages.
 - `-g` - provides ability to setup global directives. `daemon on` for example
@@ -235,7 +235,7 @@ We can see that Nginx uses a `.pid` file. This is how Nginx knows which process 
 
 ![image](https://github.com/user-attachments/assets/20145be2-1899-490c-a534-27e4801a5329)
 
-The last thing I want to configure in the `[Service]` section is `KillMode`. This option controls how signals are sent to processes. Here are the available options:
+The last thing I want to configure in the `[Service]` section is `KillMode`. This option controls how signals are sent to processes. Here are the available options[8]:
 
 - `process` - kill only main process.
 - `mixed` - kill main and children processes.
@@ -279,11 +279,11 @@ Reload.
 
 ![image](https://github.com/user-attachments/assets/90ffa4f0-e87e-4eaa-ae75-482965e7a30e)
 
-Cron is a classic daemon used to periodically execute tasks at a specific time. Regular energy support activities posted in crontab files and special directories.
+Cron is a classic daemon used to periodically execute tasks at a specific time. Regular energy support activities posted in crontab files and special directories[9].
 
 Main cron configuration file, `/etc/crontab`.
 
-The crontab table consists of 6 columns separated by spaces or tabs. The first five columns specify the execution time. After the time fields, the user from whom the command is run is indicated. All other characters in the string are interpreted as an executed command with its parameters. If the command sends some text to the standard output, this text is sent by e-mail to the user.
+The crontab table consists of 6 columns separated by spaces or tabs. The first five columns specify the execution time. After the time fields, the user from whom the command is run is indicated. All other characters in the string are interpreted as an executed command with its parameters. If the command sends some text to the standard output, this text is sent by e-mail to the user[9].
 
 ```
 * * * * * <user> <command>
@@ -305,7 +305,7 @@ Let's try 2 ways to execute script in crontab:
 
 ### Crontab -e
 
-To run the script this way, the only things we need to do are run the command and specify the cron rule. Let’s do it.
+To run the script this way, the only things we need to do are run the command and specify the cron rule. Let’s do it[10].
 
 `crontab -e`
 
@@ -315,7 +315,7 @@ The script will be executed every 30 minutes on Wednesday.
 
 ### /etc/cron.d
 
-For this, we need to create a file with the rule in `/etc/cron.d`.
+For this, we need to create a file with the rule in `/etc/cron.d`[10].
 
 ```
 vi /etc/cron.d/run_script
