@@ -17,13 +17,13 @@
 
 ![image](https://github.com/user-attachments/assets/178adbed-25c4-453a-9a12-2071bdf207bd)
 
-Systemd - is a linux initialization and units manager[1]. It controls how system is booted. It uses `unit` astraction to manage resources.
+`systemd` is a Linux initialization and unit manager. It controls how the system is booted and uses the `unit` abstraction to manage resources.
 
-Systemd initialized system using `target units`. Target is usually run level, but not all targets are runlevels. Unit called `default.target` is a default run-level configured in system and it is symlink to `boot.target`.  
+`systemd` initializes the system using `target` units. A target is usually a run level, but not all targets are run levels. The unit called `default.target` is the default run level configured in the system, and it is a symlink to `boot.target`.
 
 ![image](https://github.com/user-attachments/assets/a47c4084-a88c-45b1-a01e-00bbd5aed532)
 
-Unit refers to any resource that the system knows how to operate on and manage. There are several unit categories[2]:
+A `unit` refers to any resource that the system knows how to operate and manage. There are several `unit` categories:
 
 ```
 - .service: A service unit describes how to manage a service or application on the server. This will include how to start or stop the service, under which circumstances it should be automatically started, and the dependency and ordering information for related software.
@@ -40,11 +40,11 @@ Unit refers to any resource that the system knows how to operate on and manage. 
 - .scope: Scope units are created automatically by systemd from information received from its bus interfaces. These are used to manage sets of system processes that are created externally.
 ```
 
-Init is the first process started during system boot. It is a daemon process that continues running until the system is shut down. Init is the direct or indirect ancestor of all other processes, and automatically adopts all orphaned processes[3].
+`init` is the first process started during system boot. It is a daemon process that continues running until the system is shut down. `init` is the direct or indirect ancestor of all other processes and automatically adopts all orphaned processes.
 
 ![image](https://github.com/user-attachments/assets/4eb05a1c-6d20-48f3-b6d5-28a57a996553)
 
-Systemctl - is a command line interface to control systemd manually[2]. It provides commands to list and manages systemd units. It also can manage run levels of system.
+`systemctl` is a command-line interface to control `systemd` manually. It provides commands to list and manage `systemd` units. It can also manage the run levels of the system.
 
 Example commands:
 
@@ -60,7 +60,7 @@ systemctl list-units --type=service - Get list of all service units
 
 ## What are the available Runlevel on linux?
 
-Run levels in Linux represent different modes of operation that define the services and processes running on the system.
+Run levels in Linux represent different modes of operation that define which services and processes are running on the system.
 
 There are 7 traditional run levels[4]
 ```
@@ -73,7 +73,7 @@ There are 7 traditional run levels[4]
 6 Reboot - Reboots the system.
 ```
 
-Run levels can also be switched via systemd. Systemd have several command to permorm it:
+Run levels can also be switched via `systemd`. `systemd` has several commands to perform this:
 
 ```
 systemctl set-default multi-user.target - sets default run level
@@ -81,7 +81,7 @@ systemctl set-default multi-user.target - sets default run level
 systemctl isolate graphical.target - switch run level of system for one time.
 ```
 
-This commands operate with run level targets[5].
+This `units` operate with run level targets[5].
 
 - poweroff.target — system shutdown.
 - rescue.target — recovery mode. In this mode, a minimal set of services is started, and networking is not enabled. It is used for system recovery purposes. It is similar to Safe Mode in Windows.
@@ -106,9 +106,9 @@ Let's execute it:
 - `STATE` - state of unit, related to file
 - `VENDOR PRESET` - state of unit, related to file, that vendor setted up as default.
 
-Command shows list of unit files, it's states and vendor preseted state.
+The command shows a list of unit files, their states, and vendor-preset states.
 
-It also supports fitering unit files by type with `--type=<type>` flag.
+It also supports filtering unit files by type using the `--type=<type>` flag.
 
 ![image](https://github.com/user-attachments/assets/18e79d06-dbfa-436b-8061-9eee4387b9a0)
 
@@ -126,31 +126,31 @@ I created file lab5.sh
 
 ![image](https://github.com/user-attachments/assets/94999296-ad98-45d4-9eaa-933db094a1d8)
 
-Then I created systemd service unit file
+Then, I created a `systemd` service unit file.
 
 ![image](https://github.com/user-attachments/assets/a4f0c936-1380-4b86-a26c-8a8ec42d28df)
 
-File succesfully loaded to systemd and executed
+The file was successfully loaded into `systemd` and executed.
 
 ![image](https://github.com/user-attachments/assets/1f73213b-ba2d-4ae8-a585-d3c3ede1dcd8)
 
-Let's follow requirements.
+Let's follow the requirements.
 
 ## 2.1 It should run as your current user
 
-To run service as current user, let's replace unit to `~/.config/systemd/user/`
+To run the service as the current user, let's move the unit to `~/.config/systemd/user/`.
 
 ![image](https://github.com/user-attachments/assets/f7b1b95d-6284-4b68-9a55-a57ec656abd4)
 
-To check whether it works, I added $USER echo.
+To check if it works, I added an `$USER` echo.
 
 ![image](https://github.com/user-attachments/assets/133e9f30-dcf1-4684-98f1-7d8b1ddbfa8d)
 
-Let's run it with `--user` flag.
+Let's run it with the `--user` flag.
 
 ![image](https://github.com/user-attachments/assets/083e1103-e997-47b6-a014-801c7ccffa17)
 
-Works!
+It works!
 
 ## 2.2 The working directory should be set to the current user home directory
 
@@ -172,7 +172,7 @@ To run service only after network.target, I added `After: network.target`.
 
 ![image](https://github.com/user-attachments/assets/7a14e092-3e40-43e2-9c2d-b0212b6fdcb0)
 
-I dont know how to check that it works, because of this I simply will run it.
+I dont know how to check that it works, because of this I simply ran it.
 
 ![image](https://github.com/user-attachments/assets/3f51e978-de87-4165-8052-e56c025e069d)
 
@@ -203,25 +203,25 @@ dpkg -l | grep nginx
 
 ## Systemd service unit implementation
 
-I started with `[Unit section]`. Firstly I added description.
+I started with the `[Unit]` section. First, I added a description.
 
 ![image](https://github.com/user-attachments/assets/f4d3655f-cb3d-443b-a575-c4fc510c3d74)
 
-Server must be executed after network initialization.
+The server must be executed after network initialization.
 
 ![image](https://github.com/user-attachments/assets/379da96e-ede3-4a07-9947-859dae1dbb88)
 
-That all with `[Unit]` section. Let's describe `[Service]`. I started with Type, this field has (8 options)[https://www.freedesktop.org/software/systemd/man/latest/systemd.service.html]. I will use `forking`, because of nginx master-worker architecture.
+That's all for the `[Unit]` section. Now, let's describe the `[Service]` section. I started with the `Type`, which has (8 options)[https://www.freedesktop.org/software/systemd/man/latest/systemd.service.html]. I will use `forking` because of the Nginx master-worker architecture.
 
 ![image](https://github.com/user-attachments/assets/11a39ca7-6ecc-4965-beb6-9f0fd56e4944)
 
-Next step is to define control commands. We have three main options to control web server:
+The next step is to define the control commands. We have three main options to control the web server:
 
-- stop
-- start
-- reload
+- **stop**
+- **start**
+- **reload**
 
-Moreover, configuration of service required test before server launch.
+Moreover, the configuration of the service requires testing before the server launch.
 
 ![image](https://github.com/user-attachments/assets/74ba386d-0b8d-41c3-8cd8-912ea6d4a93f)
 
@@ -231,24 +231,24 @@ flags:
 - `-g` - provides ability to setup global directives. `daemon on` for example
 - `-s` - flag to send signal to main process. For example `reload` sends SIGHUP to master process and makes hot-reload of web server.
 
-We can see that nginx uses .pid file. This is the way nginx knows what process to send signals. Systemd provides feature to set pid file via `PIDfile` line.
+We can see that Nginx uses a `.pid` file. This is how Nginx knows which process to send signals to. `systemd` provides a feature to set the PID file using the `PIDFile` directive.
 
 ![image](https://github.com/user-attachments/assets/20145be2-1899-490c-a534-27e4801a5329)
 
-The last thing I want to configure in `[Service]` section is KillMode. This function controls how signals will be sent to processes, here is options:
+The last thing I want to configure in the `[Service]` section is `KillMode`. This option controls how signals are sent to processes. Here are the available options:
 
 - `process` - kill only main process.
 - `mixed` - kill main and children processes.
 - `control-group` - kill the whole control group of service unit.
 - `none` - do nothing.
 
-I use `mixed` option, to kill master nginx process and workers at the same time.
+I use the `mixed` option to kill the master Nginx process and the worker processes at the same time.
 
 ![image](https://github.com/user-attachments/assets/4b3b05c3-23be-403d-9ccd-58cb13a6666d)
 
-Next section is `[Install]`. I will use it only for one purpose - autostart. I can define there `WantedBy` directive that will execute service on chosen run-level. 
+The next section is `[Install]`. I will use it solely for one purpose — autostart. I can define the `WantedBy` directive there, which will execute the service at the chosen run level.
 
-System has multi-user run level by default. I will use this target.
+The system has a multi-user run level by default. I will use this target.
 
 ![image](https://github.com/user-attachments/assets/5e25e2e7-d9bb-40c4-84d6-ad73f5259a43)
 
@@ -260,7 +260,7 @@ I loaded service unit file to systemd.
 
 ![image](https://github.com/user-attachments/assets/8ffd40ad-9a83-4edc-a8c5-b32519c14f38)
 
-Try to start nginx.
+Tried to start nginx.
 
 ![image](https://github.com/user-attachments/assets/972de03a-55b0-468d-9ec9-0cbd1cabb02e)
 
@@ -279,32 +279,79 @@ Reload.
 
 ![image](https://github.com/user-attachments/assets/90ffa4f0-e87e-4eaa-ae75-482965e7a30e)
 
+Cron is a classic daemon used to periodically execute tasks at a specific time. Regular energy support activities posted in crontab files and special directories.
+
+Main cron configuration file, `/etc/crontab`.
+
+The crontab table consists of 6 columns separated by spaces or tabs. The first five columns specify the execution time. After the time fields, the user from whom the command is run is indicated. All other characters in the string are interpreted as an executed command with its parameters. If the command sends some text to the standard output, this text is sent by e-mail to the user.
+
+```
+* * * * * <user> <command>
+- - - - -
+| | | | |
+| | | | ----- week day (0—7)
+| | | ------- month (1—12)
+| | --------- daoy of month (1—31)
+| ----------- hour (0—23)
+------------- minute (0—59)
+```
+
+## Set the shell script that you have written in Task 2 to run in a crontab, configure the crontab to run every 30 minute on Wednesday
+
 Let's try 2 ways to execute script in crontab:
 
 1. `crontab -e` command
 2. file in `/etc/cron.d/` directory
 
-## Crontab -e
+### Crontab -e
 
-To run script this way, the only things we need to run command and scpecify cron rule. Let's do it.
+To run the script this way, the only things we need to do are run the command and specify the cron rule. Let’s do it.
 
 `crontab -e`
 
 ![image](https://github.com/user-attachments/assets/4545dee9-ef44-45a0-9fe3-3117eed8b877)
 
-Script will be executed every 30 minutes at Wednesday.
+The script will be executed every 30 minutes on Wednesday.
 
+### /etc/cron.d
 
-## /etc/cron.d
-
-For this way we need to create file with rule in /etc/cron.d
+For this, we need to create a file with the rule in `/etc/cron.d`.
 
 ```
 vi /etc/cron.d/run_script
 ```
 ![image](https://github.com/user-attachments/assets/a635290d-ba2a-4876-9f4b-9fab50131970)
 
-Script will be executed every 30 minutes at Wednesday.
+The script will be executed every 30 minutes on Wednesday.
+
+### Systemd timer
+
+Cron is a good scheduler, but it has disadvantages:
+
+- No built-in logging: It records the fact of command execution, but there is no access to the process's stdout.
+- To stop a schedule, you have to delete the file or comment out the configuration in the main file.
+
+In my opinion, there is a better built-in solution for time scheduling in Linux: `systemd` timer units. Let's configure one.
+
+![image](https://github.com/user-attachments/assets/c23281b7-bc27-431e-bb4b-9bc9802b9670)
+
+This is the way to schedule execution as described in the task.
+
+Then, I loaded it in `systemd` and reloaded the daemon:
+
+![image](https://github.com/user-attachments/assets/7fefc261-0d7d-4bc8-bb05-981a7df06849)
+
+Timer requires to be started.
+
+![image](https://github.com/user-attachments/assets/cbb79ee3-8b4c-427a-8875-70f0052c8221)
+
+Let's check it.
+
+![image](https://github.com/user-attachments/assets/03072dfc-d2d0-4ee2-9df6-11db18f52d7c)
+
+Now we have a table with information about when the timer was executed.
+
+I think it is harder to configure, but much better than cron, because we can control the behavior of the timer and check the activity logs.
 
 # References
 
