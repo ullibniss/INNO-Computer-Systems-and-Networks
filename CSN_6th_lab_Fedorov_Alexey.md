@@ -66,4 +66,31 @@ Started scanning on https://app.snyk.io/ and got a report.
 
 ### SQL Injection
 
+I also found an SQL injection here.
 
+![image](https://github.com/user-attachments/assets/a00f4e20-4ae0-4b88-a2a3-3292753361b7)
+
+Attacker can inject code into the login form and retrieve any user data using the UNION statement.
+
+### Hardcoded secret
+
+Here is hardcoded secret vulnerability.
+
+![image](https://github.com/user-attachments/assets/b52541ec-a318-47df-b178-f771e84eacb7)
+
+If an attacker gains access to the code, they will learn the `secret_key`, which appears to be used for session initialization or JWT authentication.
+
+### Deserialization of Untrusted Data
+
+One more vulnerability related to deserialization of untrusted Data
+
+![image](https://github.com/user-attachments/assets/eebc6ccd-6893-4d15-94ad-f5bf628302d8)
+
+Attacker can easily insert a line of code that executes shell commands, gaining access to the system.
+
+## References
+
+1. https://docs.snyk.io/scan-with-snyk
+2. https://portswigger.net/web-security/sql-injection
+3. https://owasp.org/www-community/attacks/Command_Injection
+4. https://owasp.org/www-community/vulnerabilities/Deserialization_of_untrusted_data
